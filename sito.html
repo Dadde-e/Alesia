@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Alesia Experience - Puglia Nel Cuore</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root {
+      --primary-white: #fdfbf7;
+      --gold-accent: #e0a96d;
+      --terracotta: #c85a32;
+      --olive-green: #2d5a27;
+      --sea-blue: #0077b6;
+      --glass-bg: rgba(20, 20, 20, 0.45);
+      --glass-border: rgba(255, 255, 255, 0.25);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body, html {
+      height: 100%;
+      font-family: 'Montserrat', sans-serif;
+      color: #ffffff;
+      overflow-x: hidden;
+    }
+
+    /* Video Sfondo */
+    .video-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -2;
+    }
+
+    /* Overlay per contrasto */
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.65) 100%);
+      z-index: -1;
+    }
+
+    /* Layout Principale */
+    .container {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 2rem 1rem;
+      text-align: center;
+    }
+
+    .language-switcher {
+      position: fixed;
+      top: 1rem;
+      right: 1rem;
+      z-index: 5;
+      padding: 0.55rem 0.8rem;
+      border: 1px solid var(--glass-border);
+      border-radius: 999px;
+      background: rgba(20, 20, 20, 0.62);
+      color: #fff;
+      font: 500 0.8rem 'Montserrat', sans-serif;
+      cursor: pointer;
+      outline: none;
+    }
+
+    .language-switcher:focus-visible {
+      box-shadow: 0 0 0 3px rgba(224, 169, 109, 0.55);
+    }
+
+    .language-switcher select {
+      border: 0;
+      outline: 0;
+      background: transparent;
+      color: inherit;
+      font: inherit;
+      cursor: pointer;
+    }
+
+    .language-switcher option {
+      color: #222;
+    }
+
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+
+    /* Card Glassmorphism */
+    .card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid var(--glass-border);
+      border-radius: 24px;
+      padding: 2.5rem 1.8rem;
+      max-width: 480px;
+      width: 100%;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+      animation: fadeIn 1s ease-in-out;
+    }
+
+    h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.1rem;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+      margin-bottom: 0.3rem;
+      color: #ffffff;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    }
+
+    .subtitle {
+      font-size: 0.95rem;
+      font-weight: 300;
+      color: var(--gold-accent);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+      margin-bottom: 2rem;
+    }
+
+    /* Pulsanti */
+    .btn-container {
+      display: flex;
+      flex-direction: column;
+      gap: 1.2rem;
+    }
+
+    .btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      padding: 1rem 1.5rem;
+      border-radius: 50px;
+      text-decoration: none;
+      color: #fff;
+      font-weight: 600;
+      font-size: 1rem;
+      border: none;
+      cursor: pointer;
+      transition: all 0.35s cubic-bezier(0.25, 0.8, 0.25, 1);
+      box-shadow: 0 6px 18px rgba(0,0,0,0.25);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn i {
+      font-size: 1.3rem;
+    }
+
+    /* Effetto Hover */
+    .btn:hover {
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: 0 12px 25px rgba(0,0,0,0.4);
+    }
+
+    /* Colori specifici pulsanti */
+    .btn-insta {
+      background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888);
+    }
+
+    .btn-web {
+      background: linear-gradient(135deg, var(--sea-blue), #00b4d8);
+    }
+
+    .btn-share {
+      background: linear-gradient(135deg, var(--terracotta), #e76f51);
+    }
+
+    /* Box Wi-Fi Dedicato */
+    .wifi-box {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px dashed var(--gold-accent);
+      border-radius: 16px;
+      padding: 1.2rem;
+      margin-top: 0.5rem;
+      text-align: left;
+    }
+
+    .wifi-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.9rem;
+      color: var(--gold-accent);
+      font-weight: 600;
+      margin-bottom: 0.8rem;
+      text-transform: uppercase;
+    }
+
+    .wifi-details {
+      display: flex;
+      flex-direction: column;
+      gap: 0.4rem;
+      font-size: 0.88rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .wifi-details span {
+      font-family: monospace;
+      background: rgba(0, 0, 0, 0.3);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: #fff;
+    }
+
+    .btn-wifi {
+      width: 100%;
+      background: linear-gradient(135deg, var(--olive-green), #52b788);
+      padding: 0.75rem;
+      font-size: 0.9rem;
+    }
+
+    /* Notifica Copiato */
+    .toast {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%) translateY(100px);
+      background: var(--gold-accent);
+      color: #111;
+      font-weight: 600;
+      padding: 12px 24px;
+      border-radius: 30px;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+      opacity: 0;
+      transition: all 0.4s ease;
+      z-index: 10;
+    }
+
+    .toast.show {
+      transform: translateX(-50%) translateY(0);
+      opacity: 1;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+</head>
+<body>
+
+  <label class="language-switcher">
+    <span class="sr-only">Lingua</span>
+    <select id="language-select" aria-label="Seleziona lingua">
+      <option value="it">Italiano</option>
+      <option value="en">English</option>
+      <option value="pt">Portugues</option>
+      <option value="es">Espanol</option>
+      <option value="fr">Francais</option>
+    </select>
+  </label>
+
+  <video class="video-bg" autoplay loop muted playsinline>
+    <source src="background.mp4.mp4" type="video/mp4">
+    Il tuo browser non supporta il tag video.
+  </video>
+
+  <div class="overlay"></div>
+
+  <div class="container">
+    <div class="card">
+      <h1>Alesia Experience</h1>
+      <div class="subtitle" data-i18n="subtitle">Puglia Nel Cuore</div>
+
+      <div class="btn-container">
+        <a href="https://www.instagram.com/alesialuxurysuiteostuni?stkn=MXcyeXR1eWdyanhjeg==" target="_blank" class="btn btn-insta">
+          <i class="fa-brands fa-instagram"></i>
+          <span data-i18n="instagram">Profilo Instagram</span>
+        </a>
+
+        <a href="https://alesialuxurysuiteostuni.com/link-bio/?utm_source=ig&utm_medium=social&utm_content=link_in_bio&fbclid=PAb21jcAUOw29wZG9mAmV4dG4DYWVtAjExAHNydGMGYXBwX2lkDzU2NzA2NzM0MzM1MjQyNwABp7JNAxflIEtiHGCNZ7lX6nT0_CN4hfbWOXBFI5Zn66YLbYE_B3Upz_hkbjiQ_aem_wMUowrS9YUCJLTLRdhna4w" target="_blank" class="btn btn-web">
+          <i class="fa-solid fa-globe"></i>
+          <span data-i18n="website">Sito Web Ufficiale</span>
+        </a>
+
+        <button onclick="shareLink()" class="btn btn-share">
+          <i class="fa-solid fa-heart"></i>
+          <span data-i18n="share">Condividici con chi vuoi tu</span>
+        </button>
+
+        <div class="wifi-box">
+          <div class="wifi-title">
+            <i class="fa-solid fa-wifi"></i> <span data-i18n="wifi">Connessione Wi-Fi</span>
+          </div>
+          <div class="wifi-details">
+            <div><strong data-i18n="network">Rete:</strong> <span>Wind3 HUB-5C5A71_EXT</span></div>
+            <div><strong data-i18n="password">Password:</strong> <span>4vqlo65bjs4hzz9f</span></div>
+          </div>
+          <button onclick="copyPassword()" class="btn btn-wifi">
+            <i class="fa-regular fa-copy"></i> <span data-i18n="copyPassword">Copia Password Wi-Fi</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="toast" class="toast" data-i18n="passwordCopied">Password copiata negli appunti!</div>
+
+  <script>
+    const translations = {
+      it: {
+        subtitle: "Puglia Nel Cuore",
+        instagram: "Profilo Instagram",
+        website: "Sito Web Ufficiale",
+        share: "Condividici con chi vuoi tu",
+        wifi: "Connessione Wi-Fi",
+        network: "Rete:",
+        password: "Password:",
+        copyPassword: "Copia Password Wi-Fi",
+        passwordCopied: "Password copiata negli appunti!",
+        linkCopied: "Link esperienza copiato negli appunti!"
+      },
+      en: {
+        subtitle: "Puglia in Your Heart",
+        instagram: "Instagram Profile",
+        website: "Official Website",
+        share: "Share it with anyone you like",
+        wifi: "Wi-Fi Connection",
+        network: "Network:",
+        password: "Password:",
+        copyPassword: "Copy Wi-Fi Password",
+        passwordCopied: "Wi-Fi password copied!",
+        linkCopied: "Experience link copied!"
+      },
+      pt: {
+        subtitle: "Puglia no Coracao",
+        instagram: "Perfil do Instagram",
+        website: "Site Oficial",
+        share: "Partilhe com quem quiser",
+        wifi: "Ligacao Wi-Fi",
+        network: "Rede:",
+        password: "Palavra-passe:",
+        copyPassword: "Copiar Palavra-passe Wi-Fi",
+        passwordCopied: "Palavra-passe Wi-Fi copiada!",
+        linkCopied: "Link da experiencia copiado!"
+      },
+      es: {
+        subtitle: "Puglia en el Corazon",
+        instagram: "Perfil de Instagram",
+        website: "Sitio Web Oficial",
+        share: "Compartelo con quien quieras",
+        wifi: "Conexion Wi-Fi",
+        network: "Red:",
+        password: "Contrasena:",
+        copyPassword: "Copiar contrasena Wi-Fi",
+        passwordCopied: "Contrasena Wi-Fi copiada!",
+        linkCopied: "Enlace de la experiencia copiado!"
+      },
+      fr: {
+        subtitle: "Les Pouilles dans le Coeur",
+        instagram: "Profil Instagram",
+        website: "Site Officiel",
+        share: "Partagez avec qui vous voulez",
+        wifi: "Connexion Wi-Fi",
+        network: "Reseau :",
+        password: "Mot de passe :",
+        copyPassword: "Copier le mot de passe Wi-Fi",
+        passwordCopied: "Mot de passe Wi-Fi copie !",
+        linkCopied: "Lien de l'experience copie !"
+      }
+    };
+
+    let currentLanguage = localStorage.getItem("site-language") || "it";
+
+    function changeLanguage(language) {
+      currentLanguage = translations[language] ? language : "it";
+      document.documentElement.lang = currentLanguage;
+      document.querySelectorAll("[data-i18n]").forEach((element) => {
+        element.textContent = translations[currentLanguage][element.dataset.i18n];
+      });
+      document.getElementById("language-select").value = currentLanguage;
+      localStorage.setItem("site-language", currentLanguage);
+    }
+
+    document.getElementById("language-select").addEventListener("change", (event) => {
+      changeLanguage(event.target.value);
+    });
+    changeLanguage(currentLanguage);
+
+    // Funzione Copia Password Wi-Fi
+    function copyPassword() {
+      const password = "4vqlo65bjs4hzz9f";
+      navigator.clipboard.writeText(password).then(() => {
+        showToast(translations[currentLanguage].passwordCopied);
+      });
+    }
+
+    // Funzione Condividi Experienza
+    function shareLink() {
+      const shareData = {
+        title: 'Alesia Experience - Puglia Nel Cuore',
+        text: 'Scopri questa fantastica esperienza in Puglia!',
+        url: 'https://www.airbnb.it/experiences/837734?s=67&unique_share_id=5f503b09-fc13-4553-8432-526fcc8e34c0'
+      };
+
+      if (navigator.share) {
+        navigator.share(shareData).catch(() => {});
+      } else {
+        navigator.clipboard.writeText(shareData.url).then(() => {
+          showToast(translations[currentLanguage].linkCopied);
+        });
+      }
+    }
+
+    // Funzione Toast
+    function showToast(message) {
+      const toast = document.getElementById("toast");
+      toast.innerText = message;
+      toast.classList.add("show");
+      setTimeout(() => {
+        toast.classList.remove("show");
+      }, 3000);
+    }
+  </script>
+</body>
+</html>
