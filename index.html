@@ -51,7 +51,7 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: radial-gradient(circle, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.65) 100%);
+      background: radial-gradient(circle, rgba(0,0,0,0.08) 0%, rgba(0,0,0,0.42) 100%);
       z-index: -1;
     }
 
@@ -112,9 +112,9 @@
 
     /* Card Glassmorphism */
     .card {
-      background: var(--glass-bg);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
+      background: rgba(20, 20, 20, 0.3);
+      backdrop-filter: blur(4px);
+      -webkit-backdrop-filter: blur(4px);
       border: 1px solid var(--glass-border);
       border-radius: 24px;
       padding: 2.5rem 1.8rem;
@@ -277,9 +277,7 @@
     </select>
   </label>
 
-  <!-- Video di Sfondo con Attributi Autoplay Ottimizzati -->
-  <video class="video-bg" autoplay loop muted playsinline preload="auto">
-    <source src="background.mp4" type="video/mp4">
+  <video class="video-bg" autoplay loop muted playsinline>
     <source src="background.mp4.mp4" type="video/mp4">
     Il tuo browser non supporta il tag video.
   </video>
