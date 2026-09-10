@@ -33,7 +33,18 @@
       overflow-x: hidden;
     }
 
-    /* Sfondo Immagine della Tavola Pugliese */
+    /* Video di sfondo con fallback immagine */
+    .bg-video {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      z-index: -3;
+      filter: brightness(0.8) saturate(1.1);
+      background: #000;
+    }
+
     .bg-image {
       position: fixed;
       top: 0;
@@ -41,19 +52,20 @@
       width: 100%;
       height: 100%;
       background:
-        linear-gradient(180deg, rgba(17, 13, 10, 0.45), rgba(17, 13, 10, 0.78)),
+        linear-gradient(180deg, rgba(17, 13, 10, 0.2), rgba(17, 13, 10, 0.58)),
         url('178180.webp') no-repeat center center / cover;
       z-index: -2;
+      display: none;
     }
 
-    /* Overlay per rendere scuro il giusto e far risaltare il contenuto */
+    /* Overlay leggero per far risaltare il contenuto senza coprire il video */
     .overlay {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: radial-gradient(circle, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.72) 100%);
+      background: linear-gradient(180deg, rgba(0,0,0,0.15), rgba(0,0,0,0.38));
       z-index: -1;
     }
 
@@ -364,6 +376,9 @@
     </select>
   </label>
 
+  <video class="bg-video" autoplay muted loop playsinline poster="178180.webp">
+    <source src="background.mp4" type="video/mp4">
+  </video>
   <div class="bg-image"></div>
   <div class="overlay"></div>
 
